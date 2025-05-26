@@ -1,0 +1,10 @@
+{{- if .Values.configmap.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configmap.name }}
+  namespace: namepsace-1
+data:
+  default.vcl: |
+{{ .Values.vclTemplate | indent 4}}
+{{- end }}

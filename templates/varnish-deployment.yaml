@@ -1,0 +1,33 @@
+{{- if .Values.varnish.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.varnish.name }}-deployment
+  namespace: {{ .Values.nginx.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.varnish.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.varnish.name }}
+    spec:
+      containers:
+      - name: {{ .Values.varnish.name }}
+        image: {{ .Values.varnish.image }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.varnish.containerport }}
+        volumeMounts:
+        - mountPath: /etc/varnish/default.vcl
+          name: {{ .Values.configmap.name }}
+          subPath: default.vcl
+      volumes:
+      - name: {{ .Values.configmap.name }}
+        configMap:
+          name: {{ .Values.configmap.name }}
+          items:
+            - key: default.vcl
+              path: default.vcl
+{{- end }}

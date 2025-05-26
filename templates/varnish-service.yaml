@@ -1,0 +1,14 @@
+{{- if .Values.varnish.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: varnish-service
+  namespace: {{ .Values.nginx.namespace }}
+spec:
+  type: {{ .Values.nginx.type }}
+  selector:
+    app: varnish
+  ports:
+    - port: 8080
+      targetPort: {{ .Values.nginx.targetPort }}
+{{- end }}

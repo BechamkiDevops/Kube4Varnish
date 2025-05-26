@@ -1,0 +1,16 @@
+{{- if .Values.nginx.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.nginx.name }}-service
+  namespace: {{ .Values.nginx.namespace }}
+  labels:
+    app: {{ .Values.nginx.name }}
+spec:
+  type: {{ .Values.nginx.type }}
+  selector:
+    app: {{ .Values.nginx.name }}
+  ports:
+    - port: {{ .Values.nginx.port }}
+      targetPort: {{ .Values.nginx.targetPort }}
+{{- end }}
