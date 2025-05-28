@@ -1,3 +1,8 @@
+ingress:
+  enabled: true
+  name: test-ingress
+  host: test-myvanish-url
+
 nginx:
   enabled: true
   name: nginx
@@ -7,6 +12,7 @@ nginx:
   namespace: namepsace-1
   image: nginx:1.14.2
   replicas: 2
+
 configmap:
   enabled: true
   name: varnish-config
